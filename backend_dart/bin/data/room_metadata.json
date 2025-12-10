@@ -1,0 +1,26 @@
+{
+    "36de962076dd507e7330aedee63535c0e9325905": {
+        "guid": "36de962076dd507e7330aedee63535c0e9325905",
+        "name": "Living"
+    },
+    "720cf847896d2b6adbfabffe4f165ad14b87ba48": {
+        "guid": "720cf847896d2b6adbfabffe4f165ad14b87ba48",
+        "name": "Hall"
+    },
+    "488fda38dcb58187e1cddfa5d8c5f4218cd68b13": {
+        "guid": "488fda38dcb58187e1cddfa5d8c5f4218cd68b13",
+        "name": "Bath"
+    },
+    "faa0322197eeb20e08a8ca075ca886af4a4c4c04": {
+        "guid": "faa0322197eeb20e08a8ca075ca886af4a4c4c04",
+        "name": "Toilet"
+    },
+    "9ed5a34d09707447a8f2d6cc550c0ca40fca9957": {
+        "guid": "9ed5a34d09707447a8f2d6cc550c0ca40fca9957",
+        "name": "Storage"
+    },
+    "ca369ba52f52f4a00c1fa15e2103a9bc782c7963": {
+        "guid": "ca369ba52f52f4a00c1fa15e2103a9bc782c7963",
+        "name": "Bedroom"
+    }
+}

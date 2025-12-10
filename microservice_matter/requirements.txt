@@ -1,0 +1,2 @@
+aiohttp==3.9.1
+python-matter-server==5.8.0

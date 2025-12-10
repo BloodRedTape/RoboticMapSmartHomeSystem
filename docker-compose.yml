@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend_dart
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend_dart/bin/data:/app/bin/data
+    environment:
+      - LOG_LEVEL=INFO
+    restart: unless-stopped
+
+  microservice_matter:
+    build: ./microservice_matter
+    ports:
+      - "5581:5581"
+    environment:
+      - MATTER_SERVER_URL=ws://matter-server:5580/ws
+      - BACKEND_URL=http://backend:8080
+      - LISTEN_HOST=0.0.0.0
+      - LISTEN_PORT=5581
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  microservice_zigbee:
+    build: ./microservice_zigbee
+    ports:
+      - "5582:5582"
+    environment:
+      - MQTT_BROKER=mqtt://mosquitto:1883
+      - MQTT_BASE_TOPIC=zigbee2mqtt
+      - BACKEND_URL=http://backend:8080
+      - LISTEN_HOST=0.0.0.0
+      - LISTEN_PORT=5582
+    depends_on:
+      - backend
+      - mosquitto
+    restart: unless-stopped
+
+  microservice_homekit:
+    build: ./microservice_homekit
+    ports:
+      - "5583:5583"
+    volumes:
+      - ./microservice_homekit/data:/data
+    environment:
+      - BACKEND_URL=http://backend:8080
+      - LISTEN_HOST=0.0.0.0
+      - LISTEN_PORT=5583
+      - STORAGE_PATH=/data
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  microservice_roborock:
+    build: ./microservice_roborock
+    ports:
+      - "5584:5584"
+    environment:
+      - BACKEND_URL=http://backend:8080
+      - LISTEN_HOST=0.0.0.0
+      - LISTEN_PORT=5584
+      - ROBOROCK_USERNAME=${ROBOROCK_USERNAME}
+      - ROBOROCK_PASSWORD=${ROBOROCK_PASSWORD}
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    restart: unless-stopped
+
+networks:
+  default:
+    name: smarthome_network
